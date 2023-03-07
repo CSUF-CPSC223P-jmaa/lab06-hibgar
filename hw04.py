@@ -232,17 +232,15 @@ def has_path(t, word):
     False
     """
     assert len(word) > 0, 'no path for empty word.'
-    if is_leaf(t):
+
+    if label(t) != word[0]:
         return False
-    else:
-        i = 0
-        for branch in branches(t):
-            if label(branch) == word[i]:
-                for branch2 in branches(branch):
-                    i+=1
-                    if label(branch2) != word[i]:
-                        return False
-    #return True
+    if len(word) == 1 and label(t) == word[0]:
+        return True
+    for branch in branches(t):
+        if has_path(branch, word[1:]):
+            return True
+    return False
 
 
 
